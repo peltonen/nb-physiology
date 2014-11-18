@@ -9,7 +9,7 @@ import traceRoutines as tm
 import scipy.signal as signal
 import matplotlib as plt
 
-__all__ = ['trace2spikes', 'mergeXSGs', 'parseXSGHeader']
+__all__ = ['trace2spikes', 'mergeXSGs', 'parseXSGHeader', 'lpFilter', 'pGrid', 'iGrid']
 
 
 def trace2spikes(trace, minThresh = 200):
@@ -60,3 +60,8 @@ def pGrid(startIndex, row=28, col=5, intervals=[[0, 10000],[10600, 19000],[19000
 
   return
 
+
+def lpFilter(trace):
+  b, a = signal.butter(8, 0.025, 'high')
+  hp_trace = signal.filtfilt(b,a,trace, padlen=150)
+  return hp_trace
