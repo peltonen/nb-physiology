@@ -61,7 +61,12 @@ def pGrid(startIndex, row=28, col=5, intervals=[[0, 10000],[10600, 19000],[19000
   return
 
 
-def lpFilter(trace):
+def hpFilter(trace):
   b, a = signal.butter(8, 0.025, 'high')
   hp_trace = signal.filtfilt(b,a,trace, padlen=150)
   return hp_trace
+
+def lpFilter(trace, Fs, Fcut):
+	b, a = signal.bessel(4, Fcut/(Fs * 1.0), 'low')
+	lp_trace = signal.filtfilt(b,a,trace, padlen=150)
+  	return lp_trace
